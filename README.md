@@ -41,7 +41,7 @@ Tech Stack
 
 
 
-2. Tic-Tac-Toe :Human vs AI
+2. Tic-Tac-Toe :Human vs AI   https://simpletictac.oneapp.dev/
 
 This is a modern, interactive Tic-Tac-Toe game built with HTML, CSS, and JavaScript.
 It features a clean, responsive design with dark and light themes, animated winning highlights, and a scoreboard to track your victories.
