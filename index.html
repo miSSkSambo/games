@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tic‑Tac‑Toe Collection</title>
+  <link rel="icon" href="favicon.ico">
+  <style>
+    body{margin:0;padding:40px 20px;font-family:system-ui,Arial,sans-serif;background:#0b1020;color:#eaeaea}
+    h1{text-align:center;margin:0 0 20px}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:980px;margin:0 auto}
+    .card{background:#0f1724;border-radius:16px;box-shadow:0 10px 25px rgba(0,0,0,.2);overflow:hidden;display:flex;flex-direction:column}
+    .thumb{width:100%;height:auto;display:block}
+    .content{padding:16px}
+    .content h2{margin:0 0 8px}
+    .content p{margin:0 0 12px;color:#b8c0d1}
+    .actions{padding:0 16px 16px}
+    .btn{display:inline-block;background:#ffcb2f;color:#0b1020;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:800}
+    @media (max-width:720px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <h1>Tic‑Tac‑Toe Collection</h1>
+  <section class="grid">
+    <article class="card">
+      <img class="thumb" src="assets/thumb-advanced.png" alt="Thumbnail: Advanced Tic‑Tac‑Toe (AI + Series)" />
+      <div class="content">
+        <h2>Advanced (AI + Series)</h2>
+        <p>PvP or Minimax AI, undo, move history, scoreboard, and best‑of‑3 series tracking.</p>
+      </div>
+      <div class="actions">
+        <a class="btn" href="tictactoe-advanced.html">Play</a>
+      </div>
+    </article>
+    <article class="card">
+      <img class="thumb" src="assets/thumb-theme.png" alt="Thumbnail: Theme Toggle Tic‑Tac‑Toe" />
+      <div class="content">
+        <h2>Theme Toggle Edition</h2>
+        <p>Minimax AI, undo/reset, win glow, and instant light/dark theme switching.</p>
+      </div>
+      <div class="actions">
+        <a class="btn" href="tictactoe-theme.html">Play</a>
+      </div>
+    </article>
+  </section>
+</body>
+</html>

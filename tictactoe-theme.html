@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tic-Tac-Toe — Theme Toggle</title>
+<style>
+  :root {
+    --bg-dark: #000000;
+    --card-dark: #1a1a1a;
+    --accent-dark: #d1006b;
+    --text-dark: #ffffff;
+
+    --bg-light: #fff0f5;
+    --card-light: #ffe4ec;
+    --accent-light: #ff1e6e;
+    --text-light: #000000;
+
+    --gap: 10px;
+    --size: min(100px, 25vw);
+  }
+
+  body {
+    font-family: system-ui, Arial, sans-serif;
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s, color 0.3s;
+  }
+
+  h1 { margin: 0 0 16px; font-weight: 700; }
+
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, var(--size));
+    grid-template-rows: repeat(3, var(--size));
+    gap: var(--gap);
+  }
+
+  .cell {
+    display: grid;
+    place-items: center;
+    font-size: 48px;
+    font-weight: 800;
+    background: var(--card);
+    border-radius: 16px;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,.2);
+    transition: background 0.3s, box-shadow 0.3s, transform 0.1s;
+    color: black;
+  }
+
+  .cell:active { transform: scale(0.97); }
+
+  .cell.win {
+    background: var(--accent) !important;
+    color: white;
+    animation: glow 1s infinite alternate;
+  }
+
+  @keyframes glow {
+    from { box-shadow: 0 0 10px 2px rgba(209,0,107,0.8); }
+    to { box-shadow: 0 0 20px 6px rgba(209,0,107,1); }
+  }
+
+  .cell:disabled { opacity: .6; cursor: not-allowed; }
+
+  .panel {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  button {
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--accent);
+    font-weight: 700;
+    cursor: pointer;
+    color: #fff;
+    transition: background 0.3s, transform 0.1s;
+  }
+
+  button:active { transform: scale(0.97); }
+
+  .status { min-width: 260px; font-weight: 600; text-align: center; }
+  .scoreboard { font-size: 14px; margin-top: 8px; text-align: center; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Tic-Tac-Toe</h1>
+  <div class="board" id="board"></div>
+  <div class="panel">
+    <div class="status" id="status">Your turn (X)</div>
+    <button id="undo">Undo</button>
+    <button id="reset">Reset</button>
+    <button id="theme">Toggle Theme</button>
+  </div>
+  <div class="scoreboard" id="scoreboard">Player: 0 | AI: 0</div>
+</main>
+
+<script>
+let board = Array(9).fill(null);
+let history = [];
+let player = 'X';
+let ai = 'O';
+let gameOver = false;
+let scores = { player: 0, ai: 0 };
+let theme = 'dark';
+
+const boardEl = document.getElementById('board');
+const statusEl = document.getElementById('status');
+const resetBtn = document.getElementById('reset');
+const undoBtn = document.getElementById('undo');
+const themeBtn = document.getElementById('theme');
+const scoreEl = document.getElementById('scoreboard');
+
+const wins = [
+  [0,1,2],[3,4,5],[6,7,8],
+  [0,3,6],[1,4,7],[2,5,8],
+  [0,4,8],[2,4,6]
+];
+
+function setTheme() {
+  if (theme === 'dark') {
+    document.documentElement.style.setProperty('--bg', 'var(--bg-dark)');
+    document.documentElement.style.setProperty('--card', 'var(--card-dark)');
+    document.documentElement.style.setProperty('--accent', 'var(--accent-dark)');
+    document.documentElement.style.setProperty('--text', 'var(--text-dark)');
+  } else {
+    document.documentElement.style.setProperty('--bg', 'var(--bg-light)');
+    document.documentElement.style.setProperty('--card', 'var(--card-light)');
+    document.documentElement.style.setProperty('--accent', 'var(--accent-light)');
+    document.documentElement.style.setProperty('--text', 'var(--text-light)');
+  }
+}
+setTheme();
+
+function render() {
+  boardEl.innerHTML = '';
+  board.forEach((val, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'cell';
+    btn.textContent = val || '';
+    if (gameOver && winningLine.includes(idx)) btn.classList.add('win');
+    btn.disabled = !!val || gameOver;
+    btn.addEventListener('click', () => handleMove(idx, player));
+    boardEl.appendChild(btn);
+  });
+}
+
+function handleMove(i, symbol) {
+  if (board[i] || gameOver) return;
+  history.push([...board]);
+  board[i] = symbol;
+  checkGame();
+  if (!gameOver && symbol === player) setTimeout(aiMove, 300);
+  render();
+}
+
+function aiMove() {
+  let move = minimax(board, ai).index;
+  handleMove(move, ai);
+}
+
+function getWinner(b) {
+  for (const [a,b1,c] of wins) {
+    if (b[a] && b[a] === b[b1] && b[a] === b[c]) {
+      return { winner: b[a], line: [a,b1,c] };
+    }
+  }
+  return null;
+}
+
+let winningLine = [];
+
+function checkGame() {
+  const result = getWinner(board);
+  if (result) {
+    gameOver = true;
+    winningLine = result.line;
+    if (result.winner === player) {
+      scores.player++;
+      statusEl.textContent = "You win!";
+    } else {
+      scores.ai++;
+      statusEl.textContent = "AI wins!";
+    }
+    updateScore();
+  } else if (board.every(x => x)) {
+    gameOver = true;
+    statusEl.textContent = "It's a draw!";
+  } else {
+    statusEl.textContent = `Your turn (${player})`;
+  }
+}
+
+function updateScore() {
+  scoreEl.textContent = `Player: ${scores.player} | AI: ${scores.ai}`;
+}
+
+function minimax(newBoard, symbol) {
+  const availSpots = newBoard.map((v,i)=>v?null:i).filter(v=>v!==null);
+  const winnerCheck = getWinner(newBoard);
+  if (winnerCheck && winnerCheck.winner === player) return { score: -10 };
+  if (winnerCheck && winnerCheck.winner === ai) return { score: 10 };
+  if (availSpots.length===0) return { score: 0 };
+
+  let moves = [];
+  for (let i of availSpots) {
+    let move = { index: i };
+    newBoard[i] = symbol;
+    move.score = symbol===ai?minimax(newBoard,player).score:minimax(newBoard,ai).score;
+    newBoard[i] = null;
+    moves.push(move);
+  }
+  let bestMove;
+  if (symbol===ai) {
+    let bestScore=-Infinity;
+    for(let m of moves) if(m.score>bestScore){bestScore=m.score;bestMove=m;}
+  } else {
+    let bestScore=Infinity;
+    for(let m of moves) if(m.score<bestScore){bestScore=m.score;bestMove=m;}
+  }
+  return bestMove;
+}
+
+resetBtn.addEventListener('click',()=>{
+  board=Array(9).fill(null);
+  history=[];
+  gameOver=false;
+  winningLine=[];
+  statusEl.textContent=`Your turn (${player})`;
+  render();
+});
+
+undoBtn.addEventListener('click',()=>{
+  if(history.length>0){
+    board=history.pop();
+    gameOver=false;
+    winningLine=[];
+    statusEl.textContent=`Your turn (${player})`;
+    render();
+  }
+});
+
+themeBtn.addEventListener('click',()=>{
+  theme=theme==='dark'?'light':'dark';
+  setTheme();
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
