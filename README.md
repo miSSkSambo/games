@@ -1,23 +1,78 @@
-# Tic‑Tac‑Toe Collection
+# 🎮 Tic-Tac-Toe Collection  
 
-Two modern, no‑build HTML games you can open directly in a browser.
+A collection of two modern Tic-Tac-Toe web games built with **HTML, CSS, and JavaScript**. Each version has its own unique design and features — from AI opponents and best-of-3 series tracking to theme toggling and animated effects.  
 
-## Files
-- `tictactoe-advanced.html` – Feature‑rich Tic‑Tac‑Toe with PvP/AI (minimax), undo, move history, scoreboard, and best‑of‑3 series.
-- `tictactoe-theme.html` – Minimal Tic‑Tac‑Toe with AI, undo/reset, win highlight, and light/dark theme toggle.
-- `index.html` – Landing page linking to both games.
+---
 
-## Quick Start
-1. Download or clone this repo.
-2. Open `index.html` (or either game file) in your browser.
+## 🚀 Games Included  
 
-## Deploy to GitHub Pages
-A ready‑to‑use Actions workflow is included. Push a `main` branch and enable Pages → **GitHub Actions**.
+### 1. Advanced (AI + Series)  
+Tic-Tac-Toe with enhanced functionality:  
+- ✅ **PvP or Vs AI (minimax)**  
+- ✅ **Undo & Reset buttons**  
+- ✅ **Move history log**  
+- ✅ **Dynamic scoreboard**  
+- ✅ **Best-of-3 series tracker**  
+- ✅ **Winning glow animations**  
+- ✅ **Fully responsive layout**  
 
-## Tech Notes
-- Pure HTML/CSS/JS, no dependencies or build step.
-- Minimax AI ensures optimal AI play.
-- Keyboard/Touch friendly; responsive layout.
+👉 [Play Advanced](tictactoe-advanced.html)  
 
-## License
-MIT — see `LICENSE`.
+---
+
+### 2. Theme Toggle Edition  
+A sleek version with theming options:  
+- ✅ **Vs AI (minimax)**  
+- ✅ **Undo & Reset options**  
+- ✅ **Light/Dark theme toggle** 🌗  
+- ✅ **Win glow highlight effect**  
+- ✅ **Live scoreboard**  
+- ✅ **Clean responsive design**  
+
+👉 [Play Theme Edition](tictactoe-theme.html)  
+
+---
+
+## 🛠 Tech Stack  
+
+<p align="left">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" width="40" height="40"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" width="40" height="40"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" width="40" height="40"/>
+</p>
+
+- **HTML5** → Semantic structure & accessibility  
+- **CSS3** → Responsive design, animations, light/dark theming  
+- **JavaScript (ES6)** → Game logic, minimax AI, interactivity  
+
+---
+
+## 📂 Project Structure  
+
+```
+.
+├── index.html                # Landing page (links to both games)
+├── tictactoe-advanced.html   # Advanced version with AI + Series
+├── tictactoe-theme.html      # Theme Toggle Edition
+├── assets/
+│   ├── favicon.png           # Favicon preview
+│   ├── thumb-advanced.png    # Thumbnail for Advanced
+│   ├── thumb-theme.png       # Thumbnail for Theme Edition
+├── favicon.ico
+├── README.md
+├── LICENSE
+└── .github/workflows/pages.yml  # GitHub Pages deploy
+```
+
+---
+
+## 🌐 Live Demo  
+
+Once pushed to GitHub, enable **GitHub Pages** and your site will be live at:  
+👉 `https://YOUR_USERNAME.github.io/tictactoe/`
+
+---
+
+## 📜 License  
+
+This project is licensed under the **MIT License** — free to use, modify, and distribute.  
